@@ -8,17 +8,15 @@ def word_position(word)
 
   min_position = 1
   max_position = factorial(word.length)
-  less_positions = 1
 
-  duplicates.each do |char, count|
-    if count > 1
-      less_positions *= factorial(count)
-    end
-  end
-
-  max_position /= less_positions
-  divide_by = word.length
+  max_position /= less_factorial(duplicates)
+  length_left = word.length
   section_size = max_position
+
+  possibilities = factorial(length_left)/less_factorial(duplicates)
+  puts possibilities
+
+  # atat should return 2
 
   word.each_char do |char|
     section = letter_order.index(char) + 1
@@ -28,16 +26,28 @@ def word_position(word)
         letter_order -= [char]
     end
 
-    # need to get max of 60
-    # section = 4, divide_by = 5, section_size = 60
-    min_position += section_size / divide_by * (section - 1)
-    max_position = (min_position - 1) + ((section_size / divide_by) * (duplicates[char] + 1))
+    # ttaa = 6
+    # min = 4
+
+    possibilities = factorial(length_left - 1)/less_factorial(duplicates)
+    puts possibilities
+
+    min_position += (section_size / length_left) * (section - 1)
+    max_position = (min_position - 1) + possibilities 
+
+    # min = 1, max = 3, length_left
+    #division_factor = length_left / how_many_duplicates(duplicates)
+
+    #min_position += (section_size / division_factor) * (section - 1)
+    #max_position = (min_position - 1) + section_size / division_factor
+
+    puts "#{min_position}, #{max_position}"
 
     if max_position == min_position
       return min_position
     else
-      divide_by -= 1
-      section_size = max_position - (min_position - 1)
+      length_left -= 1
+      section_size = possibilities
     end
   end
 end
@@ -51,4 +61,33 @@ def factorial(number)
   total
 end
 
-puts word_position("zabc")
+def less_factorial(someHash)
+  total = 1
+  someHash.each do |char, count|
+    if count > 1
+      total *= factorial(count)
+    end
+  end
+  total
+end
+
+def how_many_duplicates(someHash)
+  dupes = 1
+  someHash.each do |char, count|
+    if count > 1
+      dupes += (count - 1)
+    end
+  end
+  dupes
+end
+
+puts "babc: #{word_position('babc')}" # 4
+puts "atat: #{word_position('atat')}" # 2
+puts "aatt: #{word_position('aatt')}" # 1
+puts "ttaa: #{word_position('ttaa')}" # 6
+puts "zzcba: #{word_position('zzcba')}" # 60
+puts "zyxwv: #{word_position('zyxwv')}" # 120
+puts "zzbba: #{word_position('zzbba')}" # 30
+puts "zzzba: #{word_position('zzzba')}" # 20
+puts "zbzaz: #{word_position('zbzaz')}" # 13
+puts "zzzzcba #{word_position('zzzzcba')}" # 210
