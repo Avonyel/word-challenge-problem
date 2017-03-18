@@ -8,4 +8,5 @@ an example interview question. The question:
 
   One way to do this would be to generate the entire list of words and then find the desired ones, but this would be slow if the word is long. Write a program that takes a word as a command line argument and prints to standard output its number. Do not use the method above of generating the entire list. Your program should be able to accept any word 25 letters or less in length possibly with some letters repeated. It should use no more than 1 gig of memory and take no more than 500 milliseconds to run."
 
-Note that I am using Ruby, not C++ or any of the presumably expected languages for this solution.
+1. Note that I am using Ruby, not C++ or any of the presumably expected languages for this solution.
+2. The answer given is 1-indexed, not 0-indexed, although it could easily be modified to give the answer in 0-index.
