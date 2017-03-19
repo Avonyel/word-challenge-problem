@@ -7,13 +7,11 @@ def word_position(word)
   end
 
   min_position = 1
-  max_position = factorial(word.length)
-
-  max_position /= less_factorial(duplicates)
+  max_position = factorial(word.length) / less_factorial(duplicates)
   length_left = word.length
   section_size = max_position
 
-  possibilities = factorial(length_left)/less_factorial(duplicates)
+  possibilities = max_position
 
   # atat should return 2
 
@@ -74,3 +72,17 @@ def which_section(someHash, character)
     sum += count
   end
 end
+
+unless ARGV[0]
+  puts "Please supply a word from the command line."
+  exit
+end
+
+word = ARGV[0].upcase
+
+if word.scan(/[^A-Z]/).empty?
+  puts word_position(word)
+else
+  puts "Please use only letters, with no spaces, numbers, or special characters."
+end
+
